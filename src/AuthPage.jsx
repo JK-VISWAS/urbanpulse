@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { auth, db } from './firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { setDoc, doc } from 'firebase/firestore';
+import { Eye, EyeOff } from 'lucide-react';
 
 const AuthPage = ({ onAdminLogin }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ email: '', password: '', phone: '' });
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleAuth = async (e) => {
     e.preventDefault();
@@ -47,13 +49,22 @@ const AuthPage = ({ onAdminLogin }) => {
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             />
           )}
-          <input
-            type="password"
-            placeholder="Password"
-            autoComplete={isLogin ? "current-password" : "new-password"}
-            className="w-full mb-6 p-4 bg-slate-100 rounded-2xl outline-none"
-            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-          />
+          <div className="relative mb-6">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              autoComplete={isLogin ? "current-password" : "new-password"}
+              className="w-full p-4 bg-slate-100 rounded-2xl outline-none pr-12"
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 transition-all"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
           {error && <div className="text-rose-600 text-sm mb-3">{error}</div>}
           <button className="w-full bg-indigo-600 text-white p-4 md:p-5 rounded-2xl font-bold uppercase tracking-widest hover:bg-indigo-700 transition-all">
             {isLogin ? 'Citizen Sign In' : 'Create Account'}
