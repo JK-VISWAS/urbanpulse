@@ -4,6 +4,8 @@ import { doc, updateDoc, serverTimestamp, deleteDoc } from 'firebase/firestore';
 import { db, storage } from './firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
+import AdminStats from './AdminStats';
+
 const AdminDashboard = ({ reports }) => {
   const [updatingStatus, setUpdatingStatus] = useState(null);
   const [adminNotes, setAdminNotes] = useState({});
@@ -121,6 +123,9 @@ const AdminDashboard = ({ reports }) => {
         </div>
       </header>
 
+      {/* 1. Statistics Dashboard */}
+      <AdminStats reports={reports} />
+
       {/* Admin-Only Spatial Intel Map */}
       <div className="w-full h-[45vh] md:h-[450px] rounded-[32px] md:rounded-[40px] overflow-hidden mb-6 md:mb-12 shadow-2xl border-4 border-white">
         <FreeMap reports={reports} />
@@ -159,6 +164,25 @@ const AdminDashboard = ({ reports }) => {
               </div>
               <h3 className="text-lg md:text-xl font-bold mb-2">{report.title}</h3>
               <p className="text-slate-500 text-sm mb-4 line-clamp-2">{report.description}</p>
+
+              {/* Address Display */}
+              {report.address && (
+                <div className="flex items-start gap-1 mb-3 text-xs text-slate-500">
+                  <span className="shrink-0">📍</span>
+                  <span className="font-medium line-clamp-1" title={report.address}>{report.address}</span>
+                </div>
+              )}
+
+              {/* Audio Player in Grid Card */}
+              {report.audioUrl && (
+                <div className="mb-4 p-2 bg-indigo-50 rounded-xl flex items-center gap-2 border border-indigo-100">
+                  <div className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center flex-shrink-0 text-[10px]">▶</div>
+                  <div className="flex-1 min-w-0">
+                    <span className="text-[9px] font-black uppercase text-indigo-500 block">Voice Note</span>
+                    <audio controls src={report.audioUrl} className="w-full h-6" />
+                  </div>
+                </div>
+              )}
 
               {/* Admin Action Interface */}
               <div className="space-y-4 pt-4 border-t border-slate-100">
@@ -310,7 +334,26 @@ const AdminDashboard = ({ reports }) => {
               {selectedReport.location && (
                 <div>
                   <h3 className="text-xs font-black uppercase text-slate-500 mb-1">Location</h3>
-                  <p className="text-sm text-slate-600">Lat: {selectedReport.location.lat}, Lng: {selectedReport.location.lng}</p>
+                  <p className="text-sm text-slate-600">
+                    {selectedReport.address ? (
+                      <>
+                        <span className="block font-bold text-slate-800 mb-1">{selectedReport.address}</span>
+                        <span className="text-xs text-slate-400">({selectedReport.location.lat}, {selectedReport.location.lng})</span>
+                      </>
+                    ) : (
+                      `Lat: ${selectedReport.location.lat}, Lng: ${selectedReport.location.lng}`
+                    )}
+                  </p>
+                </div>
+              )}
+
+              {/* Audio Player in Modal */}
+              {selectedReport.audioUrl && (
+                <div className="pt-2">
+                  <h3 className="text-xs font-black uppercase text-slate-500 mb-2">Voice Message</h3>
+                  <div className="w-full p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                    <audio controls src={selectedReport.audioUrl} className="w-full" />
+                  </div>
                 </div>
               )}
             </div>

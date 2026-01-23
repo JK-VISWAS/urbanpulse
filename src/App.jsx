@@ -22,14 +22,16 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [adminAccess, setAdminAccess] = useState(false);
 
- 
+
 
   const handleLogout = async () => {
     try {
       await auth.signOut();
       setAdminAccess(false);
-      setHasEntered(true);
+      setHasEntered(false); // Reset to show landing page, then user can enter to login
       setView('login');
+      setUser(null);
+      setReports([]);
     } catch (error) {
       console.error("Error signing out:", error);
     }
@@ -101,22 +103,23 @@ export default function App() {
   // 3. THE ACTUAL DASHBOARD
   return (
     <div className="min-h-screen bg-slate-50">
-      <header className="flex justify-between items-center p-4 md:p-8 bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100">
+      <header className="flex justify-between items-center p-4 md:p-8 bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100 shadow-sm">
         <div className="text-2xl font-black italic uppercase tracking-tighter">URBAN<span className="text-indigo-600">PULSE</span></div>
         <div className="flex items-center gap-3">
           {view === 'user' && (
             <button
               onClick={() => setIsModalOpen(true)}
-              className="px-5 py-2 bg-indigo-600 text-white rounded-2xl font-bold text-xs uppercase shadow-lg hover:bg-indigo-700 transition-colors"
+              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-2xl font-bold text-sm uppercase shadow-lg hover:shadow-xl hover:from-indigo-700 hover:to-indigo-800 transition-all transform hover:-translate-y-0.5"
             >
-              + NEW REPORT
+              <span className="text-lg">+</span>
+              NEW REPORT
             </button>
           )}
           <button
             onClick={handleLogout}
-            className="px-5 py-2 bg-slate-900 text-white rounded-2xl font-bold text-xs uppercase hover:bg-slate-800 transition-colors"
+            className="px-5 py-3 bg-slate-900 text-white rounded-2xl font-bold text-sm uppercase hover:bg-slate-800 transition-all shadow-md hover:shadow-lg"
           >
-            Logout
+            LOGOUT
           </button>
         </div>
       </header>

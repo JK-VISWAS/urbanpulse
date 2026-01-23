@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
-import { db, auth } from './firebase';
-import { signOut } from 'firebase/auth';
+import { db } from './firebase';
 
 const UserDashboard = ({ onOpenModal, reports }) => {
   const [editingReport, setEditingReport] = useState(null);
@@ -58,16 +57,7 @@ const UserDashboard = ({ onOpenModal, reports }) => {
     setEditForm({ title: '', description: '', category: '' });
   };
 
-  const handleLogout = async () => {
-    try {
-      console.log("Logout clicked");
-      await signOut(auth);
-      console.log("Sign out successful");
-    } catch (error) {
-      console.error("Logout error:", error);
-      alert("Logout failed: " + error.message);
-    }
-  };
+
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -127,6 +117,27 @@ const UserDashboard = ({ onOpenModal, reports }) => {
 
                   <p className="text-slate-500 text-sm mb-4 line-clamp-2">{report.description}</p>
 
+                  {/* Address Display */}
+                  {report.address && (
+                    <div className="flex items-start gap-1 mb-4 text-xs text-slate-500">
+                      <span className="shrink-0">📍</span>
+                      <span className="font-medium line-clamp-1" title={report.address}>{report.address}</span>
+                    </div>
+                  )}
+
+                  {/* Audio Player */}
+                  {report.audioUrl && (
+                    <div className="mb-4 p-3 bg-indigo-50 rounded-2xl flex items-center gap-3 border border-indigo-100">
+                      <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center flex-shrink-0 font-bold text-xs">
+                        ▶
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-[10px] font-black uppercase text-indigo-500 block mb-1">Voice Message</span>
+                        <audio controls src={report.audioUrl} className="w-full h-6" />
+                      </div>
+                    </div>
+                  )}
+
                   {/* Live Admin Feedback Section */}
                   {report.adminUpdate && (
                     <div className="mt-4 p-4 bg-slate-50 rounded-2xl border-l-4 border-indigo-500 animate-slide-up">
@@ -159,13 +170,13 @@ const UserDashboard = ({ onOpenModal, reports }) => {
                   <input
                     type="text"
                     value={editForm.title}
-                    onChange={(e) => setEditForm({...editForm, title: e.target.value})}
+                    onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
                     className="w-full p-3 border border-slate-200 rounded-xl"
                     placeholder="Title"
                   />
                   <select
                     value={editForm.category}
-                    onChange={(e) => setEditForm({...editForm, category: e.target.value})}
+                    onChange={(e) => setEditForm({ ...editForm, category: e.target.value })}
                     className="w-full p-3 border border-slate-200 rounded-xl"
                   >
                     <option>Roads</option>
@@ -175,7 +186,7 @@ const UserDashboard = ({ onOpenModal, reports }) => {
                   </select>
                   <textarea
                     value={editForm.description}
-                    onChange={(e) => setEditForm({...editForm, description: e.target.value})}
+                    onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
                     className="w-full p-3 border border-slate-200 rounded-xl"
                     rows="3"
                     placeholder="Description"

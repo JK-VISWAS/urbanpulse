@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trash2, MapPin, Clock, ArrowUpRight, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Trash2, MapPin, Clock, ArrowUpRight, CheckCircle2, AlertCircle, Play } from 'lucide-react';
 
 const ReportCard = ({ report, isAdmin, onDelete, onToggle }) => {
     // Format the Firebase timestamp into a readable string
@@ -49,6 +49,19 @@ const ReportCard = ({ report, isAdmin, onDelete, onToggle }) => {
                     {report.description}
                 </p>
 
+                {/* Audio Message Player */}
+                {report.audioUrl && (
+                    <div className="mb-6 p-3 bg-indigo-50 rounded-2xl flex items-center gap-3 border border-indigo-100">
+                        <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center flex-shrink-0">
+                            <Play size={16} fill="currentColor" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                            <span className="text-[10px] font-black uppercase text-indigo-500 block mb-1">Voice Message</span>
+                            <audio controls src={report.audioUrl} className="w-full h-8" />
+                        </div>
+                    </div>
+                )}
+
                 {/* 3. METADATA FOOTER */}
                 <div className="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between text-slate-400">
                     <div className="flex items-center gap-4">
@@ -57,9 +70,11 @@ const ReportCard = ({ report, isAdmin, onDelete, onToggle }) => {
                             <span className="text-[11px] font-bold">{formattedDate}</span>
                         </div>
                         {report.location && (
-                            <div className="flex items-center gap-1">
-                                <MapPin size={14} className="text-indigo-400" />
-                                <span className="text-[11px] font-bold">Lvl. {Math.round(report.location.lat)}</span>
+                            <div className="flex items-center gap-1 max-w-[120px] sm:max-w-[150px]">
+                                <MapPin size={14} className="text-indigo-400 flex-shrink-0" />
+                                <span className="text-[11px] font-bold truncate" title={report.address || `Lvl. ${Math.round(report.location.lat)}`}>
+                                    {report.address || `Lvl. ${Math.round(report.location.lat)}`}
+                                </span>
                             </div>
                         )}
                     </div>
@@ -74,8 +89,8 @@ const ReportCard = ({ report, isAdmin, onDelete, onToggle }) => {
                         <button
                             onClick={() => onToggle(report.id, report.status)}
                             className={`flex-1 py-3 rounded-2xl text-[11px] font-black uppercase tracking-wider transition-all ${report.status === 'Resolved'
-                                    ? 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                                    : 'bg-indigo-600 text-white shadow-lg shadow-indigo-100 hover:bg-indigo-700'
+                                ? 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                                : 'bg-indigo-600 text-white shadow-lg shadow-indigo-100 hover:bg-indigo-700'
                                 }`}
                         >
                             {report.status === 'Resolved' ? 'Re-open Case' : 'Resolve Issue'}

@@ -23,6 +23,7 @@ const AdminLogin = ({ onAuthorized }) => {
           <input
             type="password"
             placeholder="Admin Passcode"
+            autoComplete="current-password"
             value={passcode}
             onChange={(e) => setPasscode(e.target.value)}
             className="w-full p-4 rounded-2xl bg-white/20 border border-white/30 text-white placeholder-slate-300 outline-none"

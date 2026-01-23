@@ -34,6 +34,7 @@ const AuthPage = ({ onAdminLogin }) => {
           <input
             type="email"
             placeholder="Email"
+            autoComplete="email"
             className="w-full mb-4 p-4 bg-slate-100 rounded-2xl outline-none"
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           />
@@ -41,6 +42,7 @@ const AuthPage = ({ onAdminLogin }) => {
             <input
               type="tel"
               placeholder="Phone Number"
+              autoComplete="tel"
               className="w-full mb-4 p-4 bg-slate-100 rounded-2xl outline-none"
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             />
@@ -48,6 +50,7 @@ const AuthPage = ({ onAdminLogin }) => {
           <input
             type="password"
             placeholder="Password"
+            autoComplete={isLogin ? "current-password" : "new-password"}
             className="w-full mb-6 p-4 bg-slate-100 rounded-2xl outline-none"
             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
           />

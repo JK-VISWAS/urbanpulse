@@ -1,12 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* App-specific styles - Tailwind directives are in index.css */
 
 /* 1. Fix the Map's position and size */
 .leaflet-container {
   height: 55vh !important;
   width: 100% !important;
-  z-index: 1 !important; /* This keeps it BEHIND the modal */
+  z-index: 1 !important;
+  /* This keeps it BEHIND the modal */
   position: relative;
   border-radius: 24px;
 }
@@ -29,23 +28,51 @@ button {
 }
 
 @keyframes slideUp {
-  from { transform: translateY(50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
-.animate-slide-up { animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
-.animate-fade-in { animation: fadeIn 1s ease-out forwards; }
+.animate-slide-up {
+  animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
 
 /* Unique Glow Pulse for Get Started Button */
 @keyframes glow-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); transform: scale(1); }
-  70% { box-shadow: 0 0 0 20px rgba(79, 70, 229, 0); transform: scale(1.05); }
-  100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); transform: scale(1); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4);
+    transform: scale(1);
+  }
+
+  70% {
+    box-shadow: 0 0 0 20px rgba(79, 70, 229, 0);
+    transform: scale(1.05);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
+    transform: scale(1);
+  }
 }
 
 .animate-glow {
@@ -54,9 +81,18 @@ button {
 
 /* Background shimmer for newly submitted items */
 @keyframes submission-glow {
-  0% { background: #f8fafc; }
-  50% { background: #eef2ff; border-color: #6366f1; }
-  100% { background: #f8fafc; }
+  0% {
+    background: #f8fafc;
+  }
+
+  50% {
+    background: #eef2ff;
+    border-color: #6366f1;
+  }
+
+  100% {
+    background: #f8fafc;
+  }
 }
 
 .new-submission {
@@ -65,8 +101,15 @@ button {
 
 /* Success "Resolution" animation */
 @keyframes resolve-success {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .resolved-card {
@@ -76,8 +119,15 @@ button {
 
 /* Reveal animation for footer sections */
 @keyframes reveal {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-reveal {
@@ -86,8 +136,15 @@ button {
 
 /* Smooth Slide Up for User Content */
 @keyframes slide-up {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-slide-up {
