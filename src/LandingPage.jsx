@@ -9,7 +9,16 @@ const LandingPage = ({ onEnter }) => {
         loop
         muted
         playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover z-0 brightness-[0.4]"
+        preload="auto"
+style={{
+position: 'fixed',
+right: 0,
+bottom: 0,
+minWidth: '100%',
+minHeight: '100%',
+objectFit: 'cover',
+zIndex: -1,
+        }}
       >
         <source src={`${import.meta.env.BASE_URL}assets/hero.mp4`} type="video/mp4" />
       </video>
