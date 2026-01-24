@@ -21,6 +21,7 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [adminAccess, setAdminAccess] = useState(false);
+  const [lang, setLang] = useState(localStorage.getItem('appLang') || 'en');
 
 
 
@@ -35,6 +36,12 @@ export default function App() {
     } catch (error) {
       console.error("Error signing out:", error);
     }
+  };
+
+  const toggleLanguage = () => {
+    const newLang = lang === 'en' ? 'te' : 'en';
+    setLang(newLang);
+    localStorage.setItem('appLang', newLang); // Saves choice globally
   };
 
   // Report submission handled inside ReportModal
