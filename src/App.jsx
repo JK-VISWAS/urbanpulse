@@ -113,7 +113,7 @@ export default function App() {
           {view === 'user' && (
             <button
               onClick={() => setIsModalOpen(true)}
-              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-2xl font-bold text-sm uppercase shadow-lg hover:shadow-xl hover:from-indigo-700 hover:to-indigo-800 transition-all transform hover:-translate-y-0.5"
+              className="hidden md:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-2xl font-bold text-sm uppercase shadow-lg hover:shadow-xl hover:from-indigo-700 hover:to-indigo-800 transition-all transform hover:-translate-y-0.5"
             >
               <span className="text-lg">+</span>
               {t('dashboard.newReport')}

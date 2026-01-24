@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from './LanguageContext';
 import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from './firebase';
+import { Plus } from 'lucide-react';
 
 const UserDashboard = ({ onOpenModal, reports }) => {
   const { t } = useLanguage();
@@ -213,6 +214,15 @@ const UserDashboard = ({ onOpenModal, reports }) => {
           )}
         </>
       )}
+
+      {/* Floating Action Button (Mobile/Tablet) */}
+      <button
+        onClick={onOpenModal}
+        className="fixed bottom-8 right-8 z-[100] md:hidden bg-indigo-600 text-white p-4 rounded-full shadow-2xl hover:bg-indigo-700 transition-all active:scale-95 animate-in zoom-in"
+        aria-label="New Report"
+      >
+        <Plus size={32} strokeWidth={3} />
+      </button>
 
       {/* Professional Footer */}
       <footer className="w-full py-16 px-10 bg-slate-900 text-white mt-20 rounded-t-[50px]">

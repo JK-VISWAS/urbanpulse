@@ -219,7 +219,7 @@ const ReportModal = ({ isOpen, onClose }) => {
 
     return (
         <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[120] flex items-center justify-center p-4 overflow-y-auto">
-            <div className="bg-white w-full max-w-xl rounded-[48px] p-8 md:p-12 shadow-2xl relative my-auto animate-in zoom-in-95 duration-300">
+            <div className="bg-white w-full max-w-xl rounded-[48px] p-6 md:p-12 shadow-2xl relative my-auto animate-in zoom-in-95 duration-300">
                 <button
                     onClick={onClose}
                     className="absolute top-8 right-8 text-slate-400 hover:text-slate-900 bg-slate-100 p-2 rounded-full transition-colors"
