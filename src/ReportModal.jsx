@@ -26,7 +26,8 @@ const ReportModal = ({ isOpen, onClose }) => {
         description: '',
         imageUrl: '', // We'll store the URL string
         location: null, // Stores { lat, lng }
-        address: '' // Stores formatted address
+        address: '', // Stores formatted address
+        phone: '' // Stores contact number
     });
 
     // 1. GEOLOCATION LOGIC
@@ -191,14 +192,15 @@ const ReportModal = ({ isOpen, onClose }) => {
                 imageUrl,
                 audioUrl: audioDownloadUrl,
                 location: formData.location,
-                address: formData.address || '', // Save the address
+                address: formData.address || '',
+                phone: formData.phone, // Save the phone number
                 userId: auth.currentUser.uid,
                 status: 'pending',
                 createdAt: serverTimestamp()
             });
 
             // Reset form and close the modal
-            setFormData({ title: '', category: 'Roads', description: '', imageUrl: '', location: null, address: '' });
+            setFormData({ title: '', category: 'Roads', description: '', phone: '', imageUrl: '', location: null, address: '' });
             setPreviewUrl(null);
             setFile(null);
             setAddress('');
@@ -269,6 +271,24 @@ const ReportModal = ({ isOpen, onClose }) => {
                             value={formData.description}
                             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                         ></textarea>
+                    </div>
+
+                    {/* Phone Number */}
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">{t('reportMod.fPhone')}</label>
+                        <input
+                            required
+                            type="tel"
+                            pattern="[0-9]{10}"
+                            title="Please enter a valid 10-digit number"
+                            className="w-full bg-slate-50 border-2 border-transparent focus:border-indigo-500 rounded-3xl p-5 outline-none transition-all font-bold text-slate-900 shadow-inner"
+                            placeholder={t('reportMod.fPhonePlace')}
+                            value={formData.phone}
+                            onChange={(e) => {
+                                const val = e.target.value.replace(/\D/g, '').slice(0, 10);
+                                setFormData({ ...formData, phone: val });
+                            }}
+                        />
                     </div>
 
                     {/* Visual Evidence & Location */}

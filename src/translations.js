@@ -46,6 +46,8 @@ export const translations = {
             fCat: "Category",
             fDesc: "Description",
             fDescPlace: "Provide details...",
+            fPhone: "Mobile Number",
+            fPhonePlace: "Enter 10-digit number",
             attach: "Attach Photo",
             pin: "Pin Location",
             pinned: "Pinned",
@@ -63,6 +65,22 @@ export const translations = {
             resolved: "RESOLVED",
             adminResp: "Official Admin Response:",
             resComplete: "Resolution Complete:"
+        },
+        admin: {
+            title: "Admin Command Center",
+            liveData: "Live Data",
+            pinned: "Pinned on Map",
+            adminUpdate: "Admin Update:",
+            writeUpdate: "Write an update for the user...",
+            sendUpdate: "SEND UPDATE",
+            updating: "UPDATING...",
+            resDetails: "Resolution Details:",
+            photoSelect: "📸 Photo Selected",
+            uploadPhoto: "📷 Upload Resolution Photo",
+            uploadOptional: "(Optional)",
+            resolveDesc: "Describe what was done to resolve this issue...",
+            markResolved: "MARK AS RESOLVED",
+            close: "Close"
         }
     },
     te: {
@@ -112,6 +130,8 @@ export const translations = {
             fCat: "వర్గం",
             fDesc: "వివరణ",
             fDescPlace: "వివరాలను అందించండి...",
+            fPhone: "మొబైల్ నంబర్",
+            fPhonePlace: "10-అంకెల సంఖ్యను నమోదు చేయండి",
             attach: "ఫోటోను జోడించండి",
             pin: "స్థానాన్ని పిన్ చేయండి",
             pinned: "పిన్ చేయబడింది",
@@ -129,6 +149,22 @@ export const translations = {
             resolved: "పరిష్కరించబడింది",
             adminResp: "అధికారిక నిర్వాహక ప్రతిస్పందన:",
             resComplete: "పరిష్కారం పూర్తయింది:"
+        },
+        admin: {
+            title: "అడ్మిన్ కమాండ్ సెంటర్",
+            liveData: "లైవ్ డేటా",
+            pinned: "మ్యాప్‌లో పిన్ చేయబడింది",
+            adminUpdate: "అడ్మిన్ అప్‌డేట్:",
+            writeUpdate: "వినియోగదారు కోసం అప్‌డేట్ రాయండి...",
+            sendUpdate: "అప్‌డేట్ పంపండి",
+            updating: "అప్‌డేట్ అవుతోంది...",
+            resDetails: "పరిష్కార వివరాలు:",
+            photoSelect: "📸 ఫోటో ఎంపిక చేయబడింది",
+            uploadPhoto: "📷 పరిష్కార ఫోటోను అప్‌లోడ్ చేయండి",
+            uploadOptional: "(ఐచ్ఛికం)",
+            resolveDesc: "ఈ సమస్యను పరిష్కరించడానికి ఏమి చేశారో వివరించండి...",
+            markResolved: "పరిష్కరించినట్లు గుర్తించండి",
+            close: "మూసివేయి"
         }
     }
 };

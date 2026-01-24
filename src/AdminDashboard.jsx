@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from './LanguageContext';
 import FreeMap from './FreeMap';
 import { doc, updateDoc, serverTimestamp, deleteDoc } from 'firebase/firestore';
 import { db, storage } from './firebase';
@@ -7,6 +8,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import AdminStats from './AdminStats';
 
 const AdminDashboard = ({ reports }) => {
+  const { t } = useLanguage();
   const [updatingStatus, setUpdatingStatus] = useState(null);
   const [adminNotes, setAdminNotes] = useState({});
   const [adminComments, setAdminComments] = useState({});
@@ -117,9 +119,9 @@ const AdminDashboard = ({ reports }) => {
   return (
     <div className="p-4 md:p-8 animate-fade-in">
       <header className="flex justify-between items-center mb-8 md:mb-10">
-        <h1 className="text-2xl md:text-4xl font-black italic uppercase">Admin Command Center</h1>
+        <h1 className="text-2xl md:text-4xl font-black italic uppercase">{t('admin.title')}</h1>
         <div className="flex gap-4">
-          <div className="bg-slate-900 text-white px-6 py-2 rounded-full font-bold">Live Data</div>
+          <div className="bg-slate-900 text-white px-6 py-2 rounded-full font-bold">{t('admin.liveData')}</div>
         </div>
       </header>
 
@@ -188,7 +190,7 @@ const AdminDashboard = ({ reports }) => {
               <div className="space-y-4 pt-4 border-t border-slate-100">
                 {/* Status Update */}
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-400 italic">📍 Pinned on Map</span>
+                  <span className="text-xs font-bold text-slate-400 italic">📍 {t('admin.pinned')}</span>
                   <div className="flex gap-2">
                     <select
                       value={report.status || 'pending'}
@@ -206,11 +208,11 @@ const AdminDashboard = ({ reports }) => {
 
                 {/* Admin Comment Section */}
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-600 uppercase">Admin Update:</label>
+                  <label className="text-xs font-bold text-slate-600 uppercase">{t('admin.adminUpdate')}</label>
                   <textarea
                     value={adminComments[report.id] || ''}
                     onChange={(e) => setAdminComments(prev => ({ ...prev, [report.id]: e.target.value }))}
-                    placeholder="Write an update for the user..."
+                    placeholder={t('admin.writeUpdate')}
                     className="w-full p-3 text-sm border border-slate-200 rounded-xl resize-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                     rows="2"
                   />
@@ -219,14 +221,14 @@ const AdminDashboard = ({ reports }) => {
                     disabled={updatingStatus === report.id || !adminComments[report.id]?.trim()}
                     className="w-full bg-indigo-600 text-white text-xs font-bold uppercase py-2 px-4 rounded-xl hover:bg-indigo-500 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors"
                   >
-                    {updatingStatus === report.id ? 'UPDATING...' : 'SEND UPDATE'}
+                    {updatingStatus === report.id ? t('admin.updating') : t('admin.sendUpdate')}
                   </button>
                 </div>
 
                 {/* Resolution Section - Only show if not already resolved */}
                 {report.status !== 'resolved' && (
                   <div className="space-y-3 pt-2 border-t border-slate-100">
-                    <label className="text-xs font-bold text-emerald-600 uppercase">Resolution Details:</label>
+                    <label className="text-xs font-bold text-emerald-600 uppercase">{t('admin.resDetails')}</label>
 
                     {/* Photo Upload for Resolution Proof */}
                     <div className="relative">
@@ -243,13 +245,13 @@ const AdminDashboard = ({ reports }) => {
                       >
                         {resolutionFiles[report.id] ? (
                           <div className="text-center">
-                            <span className="text-emerald-600 font-bold text-xs">📸 Photo Selected</span>
+                            <span className="text-emerald-600 font-bold text-xs">{t('admin.photoSelect')}</span>
                             <p className="text-emerald-500 text-xs mt-1">{resolutionFiles[report.id].name}</p>
                           </div>
                         ) : (
                           <>
-                            <span className="text-emerald-400 text-xs">📷 Upload Resolution Photo</span>
-                            <span className="text-emerald-300 text-xs">(Optional)</span>
+                            <span className="text-emerald-400 text-xs">{t('admin.uploadPhoto')}</span>
+                            <span className="text-emerald-300 text-xs">{t('admin.uploadOptional')}</span>
                           </>
                         )}
                       </label>
@@ -259,7 +261,7 @@ const AdminDashboard = ({ reports }) => {
                     <textarea
                       value={adminNotes[report.id] || ''}
                       onChange={(e) => setAdminNotes(prev => ({ ...prev, [report.id]: e.target.value }))}
-                      placeholder="Describe what was done to resolve this issue..."
+                      placeholder={t('admin.resolveDesc')}
                       className="w-full p-3 text-sm border border-emerald-200 rounded-xl resize-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                       rows="3"
                     />
@@ -269,7 +271,7 @@ const AdminDashboard = ({ reports }) => {
                       disabled={updatingStatus === report.id || !adminNotes[report.id]?.trim()}
                       className="w-full bg-emerald-600 text-white text-xs font-bold uppercase py-3 px-4 rounded-xl hover:bg-emerald-500 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors"
                     >
-                      {updatingStatus === report.id ? 'UPLOADING...' : 'MARK AS RESOLVED'}
+                      {updatingStatus === report.id ? t('admin.updating') : t('admin.markResolved')}
                     </button>
                   </div>
                 )}
@@ -329,6 +331,9 @@ const AdminDashboard = ({ reports }) => {
               <div>
                 <h3 className="text-xs font-black uppercase text-slate-500 mb-1">Submitted by</h3>
                 <p className="text-sm text-slate-600">{selectedReport.userId}</p>
+                {selectedReport.phone && (
+                  <p className="text-sm font-bold text-indigo-600 mt-1">📞 {selectedReport.phone}</p>
+                )}
               </div>
 
               {selectedReport.location && (
@@ -363,7 +368,7 @@ const AdminDashboard = ({ reports }) => {
               onClick={() => setSelectedReport(null)}
               className="w-full mt-6 bg-slate-900 text-white font-bold py-3 rounded-2xl hover:bg-slate-800 transition-colors"
             >
-              Close
+              {t('admin.close')}
             </button>
           </div>
         </div>
